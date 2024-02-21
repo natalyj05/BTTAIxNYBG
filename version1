@@ -1,0 +1,73 @@
+#STEP 1: Pre-Processing Starter Notebook
+# Import necessary libraries
+import os
+import numpy as np
+import pandas as pd
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing import image
+
+# Define directories
+train_dir = '/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-train/BTTAIxNYBG-train'
+test_dir = '/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-test/BTTAIxNYBG-test'
+validation_dir = '/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-validation/BTTAIxNYBG-validation'
+
+# Load datasets
+train_df = pd.read_csv('/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-train.csv')
+test_df = pd.read_csv('/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-test.csv')
+validate_df = pd.read_csv('/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-validation.csv')
+
+# Data augmentation configuration for training
+train_datagen = ImageDataGenerator(
+    rotation_range=40,
+    width_shift_range=0.2,
+    height_s
+# Import necessary libraries
+import os
+import numpy as np
+import pandas as pd
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing import image
+​
+# Define directories
+train_dir = '/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-train/BTTAIxNYBG-train'
+test_dir = '/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-test/BTTAIxNYBG-test'
+validation_dir = '/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-validation/BTTAIxNYBG-validation'
+​
+# Load datasets
+train_df = pd.read_csv('/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-train.csv')
+test_df = pd.read_csv('/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-test.csv')
+validate_df = pd.read_csv('/kaggle/input/bttai-nybg-2024/BTTAIxNYBG-validation.csv')
+​
+# Data augmentation configuration for training
+train_datagen = ImageDataGenerator(
+    rotation_range=40,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest',
+    rescale=1./255
+)
+​
+# Note: No augmentation for validation and test data, only rescaling
+validation_datagen = ImageDataGenerator(rescale=1./255)
+test_datagen = ImageDataGenerator(rescale=1./255)
+​
+# Convert dataframe to a format suitable for the model training
+def df_to_dataset(dataframe, datagen, directory, batch_size=32):
+    return datagen.flow_from_dataframe(
+        dataframe=dataframe,
+        directory=directory,
+        x_col='imageFile',  # Column in dataframe that contains the filenames
+        y_col='classLabel',  # Column in dataframe that contains the class/label
+        target_size=(224, 224),
+        batch_size=batch_size,
+        class_mode='categorical'  # Change this if not a multiclass classification
+    )
+​
+# Create datasets for training, validation, and testing
+train_dataset = df_to_dataset(train_df, train_datagen, train_dir)
+validation_dataset = df_to_dataset(validate_df, validation_datagen, validation_dir)
+​
+# This setup is now ready for training with model.fit using the train_dataset and val
