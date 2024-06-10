@@ -4,7 +4,7 @@ Business context: https://www.kaggle.com/competitions/bttai-nybg-2024 <br/>
 Data context: https://www.kaggle.com/competitions/bttai-nybg-2024/data
 
 ## Overview of the Approach
-
+Our final model utilizes TensorFlow and Keras to train a deep-learning model using MobileNetV2, pre-trained on ImageNet. The MobileNetV2 model has initial layers frozen to utilize pre-learned features, with additional top layers. Training features include a learning rate and early stopping callbacks. After initial trials on a data subset, full training and validation are performed, achieving a validation loss of 0.1115 and an accuracy of 96.25%. Finally, the model generates predictions for the test set. Our team submission placed 23/76 teams, with a score of 96.63%.
 
 ## Details of the Submission
 ### Importing Libraries
